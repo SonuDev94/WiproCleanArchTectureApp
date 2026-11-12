@@ -1,0 +1,83 @@
+plugins {
+    alias(libs.plugins.android.application)
+//    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.dagger.hilt)
+}
+
+android {
+    namespace = "com.wipro.interview.wiprocleanarchitecture"
+    compileSdk {
+        version = release(37)
+    }
+
+    defaultConfig {
+        applicationId = "com.wipro.interview.wiprocleanarchitecture"
+        minSdk = 24
+        targetSdk = 37
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            optimization {
+                enable = false
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    buildFeatures {
+        compose = true
+    }
+}
+
+dependencies {
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    testImplementation(libs.junit)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+    // 1. Dagger Hilt Core
+    implementation(libs.hilt.android)
+
+    // 2. Hilt Code Generator (KSP handles compilation tasks)
+    ksp(libs.hilt.compiler)
+
+    // Image loading with Coil
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.compose.material.icons.core)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+
+    // 2. Coroutines support for handling 'suspend' functions
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    // 3. Mocking library to mock the FinTechApiService
+    testImplementation(libs.mockk)
+
+    val moshiVersion = "1.15.1" // Verify the latest stable version
+    // Moshi Core & Code Gen
+    implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
+    annotationProcessor("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
+
+}
